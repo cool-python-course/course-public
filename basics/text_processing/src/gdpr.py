@@ -12,8 +12,8 @@ def generate_logs_entries(entry_count: int = 1e2, user_count: int = 1e1) -> List
     fake = Faker()
     users = generate_users(user_count)
     for _ in range(entry_count):
-        current_user = random.sample(users, 1)
+        current_user = random.sample(users, 1)[0]
         result.append(
             f'{current_user[0]} <{current_user[1]}>: {fake.paragraph(random.randint(3,5))}'
         )
-
+    return result
