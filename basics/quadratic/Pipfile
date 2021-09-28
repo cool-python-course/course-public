@@ -6,9 +6,11 @@ verify_ssl = true
 [dev-packages]
 pylint = '*'
 coverage = '*'
+parameterized = '*'
 
 [packages]
 numpy = '*'
+parameterized = "*"
 
 [requires]
 python_version = "3.8"
