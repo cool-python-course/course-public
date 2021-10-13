@@ -93,3 +93,10 @@ if __name__ == '__main__':
         time.sleep(seconds)
 
     sleepy_function(3)
+
+    sum = lambda x, y: x+y
+    print(f'Sum of 3 and 5 is {sum(3,5)}')
+
+    numbers = [x for x in range(10)]
+    print(f'{list(map(lambda x: x ** 2, numbers))}')
+    print(f'Evens = {list(filter(lambda x: x % 2 == 0, numbers))}')
