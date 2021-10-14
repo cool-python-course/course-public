@@ -1,0 +1,27 @@
+@startuml
+
+participant main as main
+queue Task_Queue as task_queue
+participant producer as producer
+participant consumer as consumer
+
+main -> task_queue : create
+main -> producer : fork
+main -> consumer : fork
+
+loop n times
+    producer -> producer : generate task
+    producer -> task_queue : put
+end
+
+loop
+    consumer -> task_queue : get
+    task_queue -> consumer : task
+    consumer -> consumer : solve
+end
+
+main -> producer : wait for
+producer -> main : pid
+main -> task_queue : is empty
+main -> consumer : SIGTERM
+@enduml

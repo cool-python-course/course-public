@@ -1,0 +1,9 @@
+@startuml
+start
+fork
+    :Producer;
+fork again
+    :Consumer;
+end fork
+end
+@enduml
