@@ -1,3 +1,10 @@
+"""
+Calculator End Points
+
+Tasks:
+ - Add Type, Value Checking and Casting
+ - Add logging and Logger
+"""
 from flask import request, Blueprint
 import calculator
 
@@ -7,6 +14,7 @@ calculator_api = Blueprint('calculator',__name__)
 def add_end_point():
     a = request.args['a']
     b = request.args['b']
+
     return calculator.add(a,b)
 
 

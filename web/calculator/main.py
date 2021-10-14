@@ -1,3 +1,14 @@
+"""
+Bonus Task:
+ - Add evaluate end point which evaluate an Expression if it is well formatted
+    For Example:
+        - 5 + 3 => 8
+        - (2*10)-3 => 17
+ - The evaluate end point should return 4XX Status Code if the expression is not well formatted.
+    For Exmaple:
+        - (5+3 => Missing Bracket
+        - 4 x 2 => Unknown operation (x is not equal to *)
+"""
 from flask import Flask
 from calculator_router import calculator_api
 
