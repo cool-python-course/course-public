@@ -1,0 +1,15 @@
+@startuml
+start
+:process forking;
+fork
+  :child process;
+  :log pid and ppid;
+  :count and sleep;
+  :log terminate message;
+fork again
+  :parent process;
+  :log child PID;
+  :wait;
+end fork
+stop
+@enduml

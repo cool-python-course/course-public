@@ -26,4 +26,15 @@ if __name__ == '__main__':
     print(f'Platform: {sys.platform}')
 
     LOG.error('Hello')
-    sleep_and_count(10)
+    child_pid = os.fork()
+    if child_pid == 0:
+        LOG.info(f'Child Process! PID: {os.getpid()} PPID: {os.getppid()}')
+        sleep_and_count(10)
+        LOG.info(f'Child Process! PID: {os.getpid()} Counting is finished!')
+        LOG.info(f'Child Process! PID: {os.getpid()} Terminate')
+        exit(0)
+    else:
+        LOG.info(f'Parent Process! PID: {os.getpid()} PPID: {os.getppid()}')
+        os.wait()
+        LOG.info(f'Parent Process! Child Process has terminated!')
+        exit(0)
