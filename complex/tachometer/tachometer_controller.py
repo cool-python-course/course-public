@@ -26,3 +26,9 @@ def read_drivers():
     return {
         'drivers': service.read_drivers()
     }
+
+@tachometer_api.route('/drivers/<driver>')
+def read_vechiles_of_driver(driver: str):
+    return {
+        'vehicles': service.read_vehicles_of_driver(driver)
+    }

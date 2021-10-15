@@ -10,7 +10,7 @@ def get_save_directory(driver: str, vehicle: str) -> str:
     if not os.path.exists(DATA_DIR):
         LOG.info(f'Create Directory {DATA_DIR}')
         os.mkdir(DATA_DIR)
-    driver_dir = os.path.join(DATA_DIR, driver)
+    driver_dir = os.path.join(DATA_DIR, driver.replace(' ','_'))
     if not os.path.exists(driver_dir):
         LOG.info(f'Create Directory {driver_dir}')
         os.mkdir(driver_dir)
@@ -37,3 +37,6 @@ def record_route(driver : str, vehicle: str, start: str, speed: List[int]):
 
 def read_drivers() -> List[str]:
    return os.listdir(DATA_DIR)
+
+def read_vehicles_of_driver(driver: str) -> List[str]:
+    return os.listdir(os.path.join(DATA_DIR, driver))
