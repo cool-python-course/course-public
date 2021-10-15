@@ -40,3 +40,14 @@ def read_drivers() -> List[str]:
 
 def read_vehicles_of_driver(driver: str) -> List[str]:
     return os.listdir(os.path.join(DATA_DIR, driver))
+
+def read_routes_of_driver_on_vehicle(driver: str, vehicle: str):
+    save_dir = get_save_directory(driver,vehicle)
+    result = []
+    for route_file in os.listdir(save_dir):
+        with open(os.path.join(save_dir,route_file), 'r') as route:
+            LOG.debug(route)
+            content = json.load(route)
+            LOG.debug(content)
+            result.append(content)
+    return result

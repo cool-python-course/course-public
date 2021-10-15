@@ -27,8 +27,19 @@ def read_drivers():
         'drivers': service.read_drivers()
     }
 
-@tachometer_api.route('/drivers/<driver>')
+@tachometer_api.route('/drivers/<driver>', methods=['GET'])
 def read_vechiles_of_driver(driver: str):
     return {
         'vehicles': service.read_vehicles_of_driver(driver)
+    }
+
+@tachometer_api.route('/', methods=['GET'])
+def report_route():
+    LOG.debug(request.args)
+    driver = request.args.get('driver')
+    vehicle = request.args.get('vehicle')
+    if not driver or not vehicle:
+        return Response('Problem', status=400)
+    return {
+        'routes': service.read_routes_of_driver_on_vehicle(driver,vehicle)
     }
