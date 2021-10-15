@@ -20,3 +20,9 @@ def create_route_record():
 
     # Serialize Result
     return Response(result, status=200)
+
+@tachometer_api.route('/drivers', methods=['GET'])
+def read_drivers():
+    return {
+        'drivers': service.read_drivers()
+    }

@@ -26,5 +26,14 @@ def record_route(driver : str, vehicle: str, start: str, speed: List[int]):
     LOG.debug(f'Save Directory: {save_dir}')
     save_filename = start.replace(' ','_') + '.json'
     with open(os.path.join(save_dir, save_filename), 'w') as output:
-        output.write(json.dumps(speed))
+        data = {
+            'driver': driver,
+            'vehicle': vehicle,
+            'start': start,
+            'speed': speed
+        }
+        output.write(json.dumps(data))
     return f'Hello {driver}'
+
+def read_drivers() -> List[str]:
+   return os.listdir(DATA_DIR)
