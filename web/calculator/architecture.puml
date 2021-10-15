@@ -1,0 +1,22 @@
+@startuml
+
+title NTier Architecture
+
+package "Server" {
+ [Controller] <--> [Service]
+ [Service] <--> [DAO]
+ [DAO]
+ [Model]
+ [Service]  -- [Model]
+}
+cloud "Private Network" {
+    [LAN]
+}
+database "Storage" {
+ [DBMS]
+}
+[HTTP] <--> [Controller]
+[DAO] <--> [LAN]
+[LAN] <--> [DBMS]
+@enduml
+

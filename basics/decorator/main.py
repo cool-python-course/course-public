@@ -81,10 +81,10 @@ if __name__ == '__main__':
     print('Using Callback Functions!')
     count_n_times(5,my_counter)
 
-    def say_hello():
+    def get_hello_msg():
         return 'Hello'
 
-    print(f'{uppercase_decorator(say_hello)}')
+    print(f'{uppercase_decorator(get_hello_msg)}')
     print(f'{uppercase_decorator(lambda: "World")}')
 
     @measure_execution_time

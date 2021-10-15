@@ -1,0 +1,16 @@
+@startmindmap
+
+* Programming Paradigm
+** Imperative
+*** Structured
+*** Modular
+*** Object Oriented
+**** Class-based
+**** Prototype-based
+** Declerative
+*** Functional
+*** Dataflow
+** Logic
+** Mathematical
+
+@endmindmap
