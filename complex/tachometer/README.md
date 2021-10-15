@@ -17,3 +17,17 @@
 
 #### Note: User Story
 As a __role__, I want to __do something__, so that __benefit__.
+
+
+#### Note: Tachometer Recording
+
+```json
+{
+  "driver": "John Doe",
+  "vehicle": "ABC-123",
+  "start": "2021-10-15 13:26:32",
+  "speed": [0,0,1,3] 
+}
+```
+The _speed_ contains a measurement for each seconds.
+The _start_ is a string in _YYYY-mm-dd HH-MM-SS_ format.
