@@ -2,6 +2,7 @@ from typing import List
 from logger import LOG
 import os
 import json
+from report_generator_service import REPORT_GENERATION_QUEUE
 
 DATA_DIR = os.path.join(os.getcwd(), 'data')
 
@@ -25,7 +26,8 @@ def record_route(driver : str, vehicle: str, start: str, speed: List[int]):
     save_dir = get_save_directory(driver, vehicle)
     LOG.debug(f'Save Directory: {save_dir}')
     save_filename = start.replace(' ','_') + '.json'
-    with open(os.path.join(save_dir, save_filename), 'w') as output:
+    save_file_absolute_path = os.path.join(save_dir, save_filename)
+    with open(save_file_absolute_path, 'w') as output:
         data = {
             'driver': driver,
             'vehicle': vehicle,
@@ -33,6 +35,7 @@ def record_route(driver : str, vehicle: str, start: str, speed: List[int]):
             'speed': speed
         }
         output.write(json.dumps(data))
+        REPORT_GENERATION_QUEUE.put(save_file_absolute_path)
     return f'Hello {driver}'
 
 def read_drivers() -> List[str]:
