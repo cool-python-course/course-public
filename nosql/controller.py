@@ -22,3 +22,29 @@ def record_person() -> Person:
 
 def list_all_people() -> List[Person]:
     return service.list_people()
+
+
+def print_all_people() -> None:
+    for person in list_all_people():
+        print(f'{person}')
+
+
+def print_options():
+    print('[R]ecord Person \n[L]ist People\n[Q]uit')
+
+
+def is_option_string_valid(option: str) -> bool:
+    if not option:
+        return False
+    if len(option) != 1:
+        return False
+    if option not in ['R','L','Q']:
+        return False
+    return True
+
+
+def read_option() -> str:
+    selected_option = ""
+    while not is_option_string_valid(selected_option):
+        selected_option = input()
+    return selected_option
