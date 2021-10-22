@@ -1,6 +1,7 @@
 from logger import LOG
 from flask import Blueprint, request, Response
 import tachometer_service as service
+import json
 
 tachometer_api = Blueprint('tachometer', __name__, url_prefix='/tachometer')
 
@@ -38,8 +39,16 @@ def report_route():
     LOG.debug(request.args)
     driver = request.args.get('driver')
     vehicle = request.args.get('vehicle')
-    if not driver or not vehicle:
-        return Response('Problem', status=400)
+    error = []
+    if not driver:
+        error.append('driver')
+    if not vehicle:
+        error.append('vehicle')
+    if len(error) != 0:
+        return Response(json.dumps({
+            'msg': 'Problem, Missing Parameter',
+            'error': error
+        }), status=400)
     return {
         'routes': service.read_routes_of_driver_on_vehicle(driver,vehicle)
     }
