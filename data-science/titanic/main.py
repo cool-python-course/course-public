@@ -1,6 +1,8 @@
+import graphviz
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn import preprocessing, tree
 
 
 if __name__ == '__main__':
@@ -21,3 +23,23 @@ if __name__ == '__main__':
     )
     plt.title('Scatter')
     plt.show()
+
+    titanic_train.dropna(inplace=True)
+    y = titanic_train['Survived']
+    sex_encoder = preprocessing.LabelEncoder()
+    embarked_encoder = preprocessing.LabelEncoder()
+    x = titanic_train[['Pclass','Age', 'Fare']]
+    x['Sex'] = sex_encoder.fit_transform(titanic_train['Sex'])
+    x['Embarked'] = embarked_encoder.fit_transform(titanic_train['Embarked'])
+
+    classifier = tree.DecisionTreeClassifier()
+    classifier.fit(x,y)
+    # tree.plot_tree(classifier)
+    # plt.show()
+    dot_data = tree.export_graphviz(classifier)
+    graph = graphviz.Source(dot_data)
+    graph.render("Classifier")
+
+
+
+
