@@ -16,7 +16,7 @@ docker run \
 
 
 ```shell
-docker exec --interative --tty mongo /bin/bash
+docker exec --interactive --tty mongo /bin/bash
 
 mongoimport --host localhost --port 27017 --db sample --authenticationDatabase admin --username root --password example --collection accounts --file /docker-entrypoint-initdb.d/accounts.json 
 
