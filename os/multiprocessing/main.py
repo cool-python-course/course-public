@@ -19,20 +19,32 @@ def _producer(queue: Queue, interval: int, number_or_messages: int) -> None:
         LOG.info(f'Message #{i}')
         queue.put(f'Message #{i}')
         time.sleep(interval)
+    LOG.info('Producer Finished')
 
 
-def _consumer(queue: Queue, sampling_rate: int) -> None:
-    while True:
+def _consumer(queue: Queue, sampling_rate: int, no_of_unsuccessful_read: int) -> None:
+    no_of_try = 0
+    while no_of_try < no_of_unsuccessful_read:
         if not queue.empty():
+            no_of_try = 0
             LOG.info(queue.get())
+        else:
+            LOG.info(f'Unsuccessful Read, Try #{no_of_try}')
+            no_of_try += 1
         time.sleep(sampling_rate)
+    LOG.info('Consumer Finished')
 
 
 if __name__ == '__main__':
     queue = Queue()
     producer = Process(target=_producer, args=(queue, 2, 10))
-    consumer = Process(target=_consumer, args=(queue, 5))
+    consumer = Process(target=_consumer, args=(queue, 1, 3))
     producer.start()
+    LOG.info('Start Producer')
     consumer.start()
+    LOG.info('Start Consumer')
     producer.join()
-    consumer.kill()
+    LOG.info('Join Producer')
+    consumer.join()
+    LOG.info('Join Consumer')
+    # consumer.kill()
