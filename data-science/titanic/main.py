@@ -32,7 +32,7 @@ if __name__ == '__main__':
     x['Sex'] = sex_encoder.fit_transform(titanic_train['Sex'])
     x['Embarked'] = embarked_encoder.fit_transform(titanic_train['Embarked'])
 
-    classifier = tree.DecisionTreeClassifier()
+    classifier = tree.DecisionTreeClassifier(max_depth=3)
     classifier.fit(x,y)
     # tree.plot_tree(classifier)
     # plt.show()
