@@ -3,6 +3,7 @@ from pymongo import MongoClient
 from bs4 import BeautifulSoup, Tag
 from typing import List, Dict
 from util.logger import LOG
+from persist.mongodb import get_collection
 
 BASE_URL = 'http://www.profession.hu/allasok'
 
@@ -42,15 +43,6 @@ def extract_next_url(page : BeautifulSoup) -> str:
     next_btn = page.find('a', {'class': 'next'})
     return next_btn.attrs['href'] if next_btn != None else None
 
-def get_collection():
-    USERNAME = 'root'
-    PASSWORD = 'example'
-    DB_NAME = 'sample'
-    HOST = 'localhost'
-    PORT = 27017
-    CONNECTION_STRING = f'mongodb://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB_NAME}?authSource=admin'
-    client = MongoClient(CONNECTION_STRING)
-    return client[DB_NAME]['jobs']
 
 if __name__ == '__main__':
     LOG.info('Extraction Process Started')
