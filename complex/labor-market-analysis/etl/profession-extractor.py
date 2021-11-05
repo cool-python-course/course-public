@@ -1,19 +1,8 @@
-import sys
-import logging
 import requests
 from pymongo import MongoClient
 from bs4 import BeautifulSoup, Tag
 from typing import List, Dict
-
-LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
-logging.basicConfig(
-    filename='analitics.log',
-    filemode='w',
-    format=LOG_FORMAT,
-    level=logging.DEBUG
-)
-LOG = logging.getLogger()
-LOG.addHandler(logging.StreamHandler(sys.stdout))
+from util.logger import LOG
 
 BASE_URL = 'http://www.profession.hu/allasok'
 
@@ -64,10 +53,11 @@ def get_collection():
     return client[DB_NAME]['jobs']
 
 if __name__ == '__main__':
-    print('Hello World')
+    LOG.info('Extraction Process Started')
     html_doc = fetch_profession_page(BASE_URL)
     job_cards = extract_job_cards(html_doc)
     data_lake = get_collection()
     for job_card in job_cards:
         data_lake.insert(transform_job_card(job_card))
         print(f'{transform_job_card(job_card)}')
+    LOG.info('Extraction Process Finished')
