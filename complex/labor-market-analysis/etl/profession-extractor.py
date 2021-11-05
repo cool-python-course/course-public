@@ -1,3 +1,4 @@
+import time
 import requests
 from pymongo import MongoClient
 from bs4 import BeautifulSoup, Tag
@@ -9,7 +10,7 @@ BASE_URL = 'http://www.profession.hu/allasok'
 
 
 def fetch_profession_page(url: str) -> BeautifulSoup:
-    r = requests.get(BASE_URL)
+    r = requests.get(url)
     return BeautifulSoup(r.text, 'html.parser')
 
 
@@ -45,11 +46,23 @@ def extract_next_url(page : BeautifulSoup) -> str:
 
 
 if __name__ == '__main__':
+    DELAY = 2
+    BATCH_SIZE = 10
     LOG.info('Extraction Process Started')
-    html_doc = fetch_profession_page(BASE_URL)
-    job_cards = extract_job_cards(html_doc)
+    url = BASE_URL
     data_lake = get_collection()
-    for job_card in job_cards:
-        data_lake.insert(transform_job_card(job_card))
-        print(f'{transform_job_card(job_card)}')
+
+    iteration = 1
+    while url != None:
+        LOG.info(f'Fetch: {url}')
+        html_doc = fetch_profession_page(url)
+        job_cards = extract_job_cards(html_doc)
+        for job_card in job_cards:
+            data_lake.insert(transform_job_card(job_card))
+            # print(f'{transform_job_card(job_card)}')
+        url = extract_next_url(html_doc)
+        # LOG.info(f'Next Page: {url}')
+        iteration += 1
+        if iteration % BATCH_SIZE == 0:
+            time.sleep(DELAY)
     LOG.info('Extraction Process Finished')
